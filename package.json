@@ -1,0 +1,10 @@
+{
+  "name": "rustcodes-portfolio",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Premium Portfolio and Quiz System",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {}
+}
