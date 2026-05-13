@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RustCodes | Веб-разработка & Реклама</title>
+    <meta name="description" content="Портфолио RustCodes - Создание эффективных сайтов и настройка рекламы в Google/Яндекс.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="icon" type="image/png" href="favicon.png">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">RustCodes.</div>
+            
+            <!-- Desktop Nav -->
+            <nav class="desktop-nav">
+                <ul class="nav-links">
+                    <li><a href="#portfolio">Работы</a></li>
+                    <li><a href="#services">Услуги</a></li>
+                    <li><a href="#strategy">Стратегия</a></li>
+                    <li><a href="#quiz" class="btn btn-primary">Квиз</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-right">
+                <div class="status-badge hide-mobile">
+                    <span class="dot"></span> Доступен
+                </div>
+                <!-- Burger Icon -->
+                <div class="burger-menu" id="burger-toggle">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Overlay Menu -->
+        <div class="mobile-menu-overlay" id="mobile-menu">
+            <nav class="mobile-menu-content">
+                <a href="#hero" class="menu-link">Главная</a>
+                <a href="#portfolio" class="menu-link">Портфолио</a>
+                <a href="#services" class="menu-link">Услуги</a>
+                <a href="#strategy" class="menu-link">Стратегия</a>
+                <a href="#quiz" class="menu-link">Калькулятор стоимости</a>
+                <div class="menu-footer">
+                    <div class="status-badge">
+                        <span class="dot"></span> Доступен для новых проектов
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <div class="container hero-container">
+                <!-- Hero text -->
+                <div class="hero-content">
+                    <span class="accent-cursive">Hello, I'm RustCodes</span>
+                    <h1>Делаю сайты,<br>которые продают<br>и качают бизнес</h1>
+                    <p class="hero-subtext">Специализируюсь на создании премиальных сайтов и настройке эффективной рекламы в Google/Яндекс.</p>
+                    <div class="hero-actions">
+                        <a href="#quiz" class="btn btn-cta">Запустить проект</a>
+                    </div>
+                </div>
+
+                <!-- Static Tech Cluster -->
+                <div class="hero-visual-wrapper">
+                    <div class="hero-tech-cluster">
+                        <div class="tech-badge tech-badge-1"><img src="images/google_icon_3d_1778600920823.png" alt="Google"></div>
+                        <div class="tech-badge tech-badge-2"><img src="images/js_icon_3d_1778600962320.png" alt="JavaScript"></div>
+                        <div class="tech-badge tech-badge-3"><img src="images/tilda_icon_3d_1778600874718.png" alt="Tilda"></div>
+                        <div class="tech-badge tech-badge-4"><img src="images/html5_icon_3d_1778600935193.png" alt="HTML5"></div>
+                        <div class="tech-badge tech-badge-5"><img src="images/css3_icon_3d_1778600949716.png" alt="CSS3"></div>
+                        <div class="tech-badge tech-badge-6"><img src="images/yandex_icon_3d_1778600907397.png" alt="Yandex"></div>
+                        <div class="tech-badge tech-badge-7"><img src="images/google_ads_icon_3d_1778600894364.png" alt="Google Ads"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio" class="portfolio">
+            <div class="container">
+                <div class="portfolio-header">
+                    <span class="accent-cursive">Featured Cases</span>
+                    <h2 class="section-title">Выбранные <span class="gradient-text">кейсы</span></h2>
+                    <p>Проекты, которые меняют правила игры в своих нишах.</p>
+                </div>
+                
+                <div class="complex-grid">
+                    <!-- Estem (Placeholder) -->
+                    <div class="project-card wide reveal">
+                        <div class="project-image-wrapper">
+                            <div class="project-img-bg" style="background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);"></div>
+                            <div class="mockup-composition">
+                                <div class="device-laptop">
+                                    <div class="screen">
+                                        <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.1); font-size:3rem; font-weight:900; letter-spacing:10px;">ESTEM</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <span class="tag">Digital Luxury</span>
+                            <h3>Estem</h3>
+                            <p>Эксклюзивный проект в разработке. Скоро здесь появится кейс.</p>
+                            <span class="view-project" style="opacity:0.5; cursor:default;">В разработке <i data-lucide="clock"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Underground Taxi -->
+                    <div class="project-card reveal">
+                        <div class="project-image-wrapper">
+                            <div class="project-img-bg" style="background-color: #111;"></div>
+                            <div class="mockup-composition">
+                                <div class="device-laptop">
+                                    <div class="screen">
+                                        <img src="images/taxi_real.png" alt="Underground Taxi">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <span class="tag">Такси & Реклама</span>
+                            <h3>Underground Taxi</h3>
+                            <p>Комплексный запуск: от лендинга до настройки потока водителей через Google Ads.</p>
+                            <a href="https://underground-taxi.kz/" target="_blank" class="view-project">Смотреть кейс <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Mangystau Tour -->
+                    <div class="project-card tall reveal">
+                        <div class="project-image-wrapper">
+                            <div class="project-img-bg" style="background-color: #f2f2f2;"></div>
+                            <div class="mockup-composition">
+                                <div class="device-laptop">
+                                    <div class="screen">
+                                        <img src="images/mangystau_real.png" alt="Mangystau Tour">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <span class="tag">Туризм</span>
+                            <h3>Mangystau Tour</h3>
+                            <p>Погружение в природу через цифровой опыт.</p>
+                            <a href="https://mangystautour999.kz/" target="_blank" class="view-project">Смотреть кейс <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Dombyra -->
+                    <div class="project-card wide reveal">
+                        <div class="project-image-wrapper">
+                            <div class="project-img-bg" style="background-color: #111;"></div>
+                            <div class="mockup-composition">
+                                <div class="device-laptop">
+                                    <div class="screen">
+                                        <img src="images/dombyra_real.png" alt="Dombyra.kz">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <span class="tag">E-commerce</span>
+                            <h3>Dombyra.kz</h3>
+                            <p>Национальные инструменты в современном формате.</p>
+                            <a href="https://www.dombyra.kz/" target="_blank" class="view-project">Смотреть кейс <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+                
+                    <!-- Service SDM -->
+                    <div class="project-card reveal">
+                        <div class="project-image-wrapper">
+                            <div class="project-img-bg" style="background-color: #2a2a2a;"></div>
+                            <div class="mockup-composition">
+                                <div class="device-laptop">
+                                    <div class="screen">
+                                        <img src="images/sdm_real.png" alt="service-sdm.kz">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <span class="tag">Услуги</span>
+                            <h3>service-sdm.kz</h3>
+                            <p>Веб‑решения и рекламные кампании.</p>
+                            <a href="https://service-sdm.kz/" target="_blank" class="view-project">Смотреть кейс <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Travel to Mangistau -->
+                    <div class="project-card reveal">
+                        <div class="project-image-wrapper">
+                            <div class="project-img-bg" style="background-color: #fafafa;"></div>
+                            <div class="mockup-composition">
+                                <div class="device-laptop">
+                                    <div class="screen">
+                                        <img src="images/travel_real.png" alt="traveltomangistau.kz">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <span class="tag">Туризм</span>
+                            <h3>traveltomangistau.kz</h3>
+                            <p>Продвижение туров и бронирование.</p>
+                            <a href="https://traveltomangistau.kz/" target="_blank" class="view-project">Смотреть кейс <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Zdorovo Clinic -->
+                    <div class="project-card reveal">
+                        <div class="project-image-wrapper">
+                            <div class="project-img-bg" style="background-color: #e6f7ff;"></div>
+                            <div class="mockup-composition">
+                                <div class="device-laptop">
+                                    <div class="screen">
+                                        <img src="images/clinic_real.png" alt="zdorovoclinic.com">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <span class="tag">Медицина</span>
+                            <h3>zdorovoclinic.com</h3>
+                            <p>Сайт клиники с онлайн-записью.</p>
+                            <a href="https://zdorovoclinic.com/" target="_blank" class="view-project">Смотреть кейс <i data-lucide="arrow-right"></i></a>
+                        </div>
+                    </div>
+
+                <!-- Buzachi Kids Camp -->
+                <div class="project-card reveal">
+                    <div class="project-image-wrapper">
+                        <div class="project-img-bg" style="background-color: #ffe6e6;"></div>
+                        <div class="mockup-composition">
+                            <div class="device-laptop">
+                                <div class="screen">
+                                    <img src="images/kids_real.png" alt="Buzachi Kids Camp">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <span class="tag">Образование</span>
+                        <h3>buzachi-kids-camp.vercel.app</h3>
+                        <p>Лагерь для детей с интерактивным сайтом.</p>
+                        <a href="https://buzachi-kids-camp.vercel.app/" target="_blank" class="view-project">Смотреть кейс <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <!-- Smart Salary Ten -->
+                <div class="project-card reveal">
+                    <div class="project-image-wrapper">
+                        <div class="project-img-bg" style="background-color: #e6ffed;"></div>
+                        <div class="mockup-composition">
+                            <div class="device-laptop">
+                                <div class="screen">
+                                    <img src="images/salary_real.png" alt="Smart Salary">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <span class="tag">Калькулятор</span>
+                        <h3>smart-salary-ten.vercel.app</h3>
+                        <p>Сервис расчета зарплаты и налогов.</p>
+                        <a href="https://smart-salary-ten.vercel.app/" target="_blank" class="view-project">Смотреть кейс <i data-lucide="arrow-right"></i></a>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="marketing" class="marketing reveal">
+            <div class="container">
+                <div class="portfolio-header">
+                    <div class="header-label">
+                        <span class="pulse-dot"></span> Результаты
+                    </div>
+                    <h2 class="section-title">Эффективность <span class="gradient-text">в цифрах</span></h2>
+                </div>
+                <div class="marketing-dashboard">
+                    <!-- Google Ads Block -->
+                    <div class="marketing-card google-ads">
+                        <div class="card-header">
+                            <img src="images/google_ads_icon_3d_1778600894364.png" alt="Google Ads" class="platform-logo">
+                            <span>Google Ads Performance</span>
+                        </div>
+                        <div class="metrics-grid">
+                            <div class="metric-item blue">
+                                <span class="metric-label">Расходы</span>
+                                <span class="metric-value">471 $</span>
+                            </div>
+                            <div class="metric-item red">
+                                <span class="metric-label">Показы</span>
+                                <span class="metric-value">52,5 тыс.</span>
+                            </div>
+                            <div class="metric-item green">
+                                <span class="metric-label">Конверсии</span>
+                                <span class="metric-value">88,00</span>
+                            </div>
+                            <div class="metric-item orange">
+                                <span class="metric-label">Цена лида</span>
+                                <span class="metric-value">3,22 $</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yandex Metrica Block -->
+                    <div class="marketing-card yandex-direct">
+                        <div class="card-header">
+                            <img src="images/yandex_icon_3d_1778600907397.png" alt="Yandex" class="platform-logo">
+                            <span>Яндекс.Метрика & Директ</span>
+                        </div>
+                        <div class="metrics-row">
+                            <div class="metric-sub-item">
+                                <span class="metric-label">Визиты</span>
+                                <span class="metric-value">1 519</span>
+                            </div>
+                            <div class="metric-sub-item">
+                                <span class="metric-label">Посетители</span>
+                                <span class="metric-value">1 306</span>
+                            </div>
+                            <div class="metric-sub-item">
+                                <span class="metric-label">Время на сайте</span>
+                                <span class="metric-value">49 с</span>
+                            </div>
+                            <div class="metric-sub-item">
+                                <span class="metric-label">Отказы</span>
+                                <span class="metric-value">40,75%</span>
+                            </div>
+                        </div>
+                        <div class="chart-mockup">
+                            <div class="chart-line"></div>
+                            <span class="chart-label">Рост глубины просмотра: +24.91%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <div class="container">
+                <div class="portfolio-header">
+                    <span class="accent-cursive">Our Expertise</span>
+                    <h2 class="section-title">Что мы <span class="gradient-text">делаем</span></h2>
+                </div>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">
+                            <img src="images/tilda_icon_3d_1778600874718.png" alt="Tilda 3D Icon" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                        <h3>Tilda</h3>
+                        <p>Быстрый запуск лендингов и многостраничных сайтов с уникальным дизайном на Zero Block.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">
+                            <img src="images/html5_icon_3d_1778600935193.png" alt="Custom Code 3D Icon" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                        <h3>Custom</h3>
+                        <p>Сложные веб-решения на современных технологиях для тех, кому мало Tilda.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon-wrapper">
+                            <img src="images/google_ads_icon_3d_1778600894364.png" alt="Google Ads 3D Icon" style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                        <h3>Ads</h3>
+                        <p>Настройка и ведение рекламы в Google и Яндекс. Приводим лиды, а не просто трафик.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="strategy" class="strategy">
+            <div class="container">
+                <div class="portfolio-header">
+                    <span class="accent-cursive">Strategic Workflow</span>
+                    <h2 class="section-title">Как мы <span class="gradient-text">работаем</span></h2>
+                    <p>Прозрачный процесс от первой идеи до взрывного роста продаж.</p>
+                </div>
+                <div class="strategy-grid">
+                    <div class="strategy-step reveal">
+                        <div class="step-number">01</div>
+                        <div class="step-icon">
+                            <img src="images/google_icon_3d_1778600920823.png" alt="Audit" style="width: 50px; height: 50px; object-fit: contain;">
+                        </div>
+                        <h3>Аналитика</h3>
+                        <p>Изучаем нишу, конкурентов и боли вашей аудитории. Формируем фундамент будущего проекта.</p>
+                    </div>
+                    <div class="strategy-step reveal">
+                        <div class="step-number">02</div>
+                        <div class="step-icon">
+                            <img src="images/tilda_icon_3d_1778600874718.png" alt="Design" style="width: 50px; height: 50px; object-fit: contain;">
+                        </div>
+                        <h3>Дизайн и UX</h3>
+                        *   Проектируем интерфейс, который ведет за руку к покупке. Создаем уникальный визуальный стиль.
+                    </div>
+                    <div class="strategy-step reveal">
+                        <div class="step-number">03</div>
+                        <div class="step-icon">
+                            <img src="images/html5_icon_3d_1778600935193.png" alt="Dev" style="width: 50px; height: 50px; object-fit: contain;">
+                        </div>
+                        <h3>Разработка</h3>
+                        <p>Верстаем на Tilda или чистом коде. Настраиваем анимации, интеграции и проверяем на ошибки.</p>
+                    </div>
+                    <div class="strategy-step reveal">
+                        <div class="step-number">04</div>
+                        <div class="step-icon">
+                            <img src="images/google_ads_icon_3d_1778600894364.png" alt="Growth" style="width: 50px; height: 50px; object-fit: contain;">
+                        </div>
+                        <h3>Рост и Реклама</h3>
+                        <p>Запускаем трафик из Google и Яндекс. Анализируем показатели и масштабируем результат.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="quiz" class="quiz-section">
+            <div class="container">
+                <div class="portfolio-header">
+                    <div class="header-label">
+                        <span class="pulse-dot"></span> Калькулятор
+                    </div>
+                    <h2 class="section-title">Стоимость <span class="gradient-text">проекта</span></h2>
+                </div>
+                <div class="quiz-card">
+                    <div class="quiz-header">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 25%;"></div>
+                        </div>
+                    </div>
+                    <div id="quiz-container" class="quiz-steps"></div>
+                    <div class="quiz-footer" style="display: flex; gap: 1rem; margin-top: 3rem;">
+                        <button id="prev-btn" class="btn btn-secondary" disabled>Назад</button>
+                        <button id="next-btn" class="btn btn-primary">Далее</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <div class="portfolio-header" style="text-align: center;">
+                    <div class="header-label" style="justify-content: center;">
+                        <span class="pulse-dot"></span> Контакты
+                    </div>
+                    <h2 class="section-title">Обсудить <span class="gradient-text">проект</span></h2>
+                </div>
+                <div class="contact-form">
+                    <form id="contact-form" action="https://formspree.io/f/xpqbndjo" method="POST">
+                        <div class="form-grid">
+                            <input type="text" name="name" id="contact-name" placeholder="Ваше имя" required data-fs-field>
+                            <input type="email" name="email" id="contact-email" placeholder="Email" required data-fs-field>
+                        </div>
+                        <span data-fs-error="email"></span>
+                        <textarea name="message" id="contact-message" placeholder="Ваш запрос" rows="5" required data-fs-field></textarea>
+                        <span data-fs-error="message"></span>
+                        <div style="display:none;">
+                            <label>Keep this field empty</label>
+                            <input name="_gotcha" value="">
+                        </div>
+                        <button type="submit" class="btn btn-cta" id="contact-submit" data-fs-submit-btn>Отправить запрос</button>
+                        <div id="contact-status" style="margin-top: 1.5rem; text-align: center; font-weight: 600; display: none;" data-fs-success></div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <p>&copy; 2026 RustCodes. Все права защищены.</p>
+            <div class="social-links" style="display: flex; gap: 1.5rem;">
+                <a href="https://wa.me/77770752008" target="_blank" style="color: var(--text-main); display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> WhatsApp
+                </a>
+                <a href="https://t.me/rustycodess" target="_blank" style="color: var(--text-main); display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Telegram
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile App-like Navigation -->
+    <nav class="mobile-nav">
+        <a href="#hero" class="nav-item active">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            <span>Главная</span>
+        </a>
+        <a href="#portfolio" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            <span>Кейсы</span>
+        </a>
+        <a href="#services" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+            <span>Услуги</span>
+        </a>
+        <a href="#strategy" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            <span>Стратегия</span>
+        </a>
+        <a href="#quiz" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><line x1="8" x2="16" y1="6" y2="6"/><line x1="16" x2="16" y1="14" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
+            <span>Квиз</span>
+        </a>
+    </nav>
+
+    <script src="script.js?v=5" defer></script>
+</body>
+</html>
