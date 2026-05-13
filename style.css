@@ -811,8 +811,10 @@ h1 {
     line-height: 1.6;
 }
 
+.strategy-list {
     margin-bottom: 2rem;
 }
+
 
 .strategy-list li {
     display: flex;
