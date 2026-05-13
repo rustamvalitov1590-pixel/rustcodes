@@ -159,9 +159,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p>${step.subtitle}</p>
                 </div>
                 <div class="quiz-form">
-                    <input type="text" id="quiz-name" name="name" placeholder="Ваше имя (необязательно)" value="${selections.name || ''}">
-                    <input type="tel" id="quiz-phone" name="phone" placeholder="Телефон" value="${selections.phone || ''}">
-                    <input type="email" id="quiz-email" name="email" placeholder="Email" value="${selections.email || ''}">
+                    <input type="text" id="quiz-name" name="name" placeholder="Ваше имя" value="${selections.name || ''}">
+                    <input type="tel" id="quiz-phone" name="phone" placeholder="+7 (___) ___-__-__" value="${selections.phone || ''}">
+                    <input type="email" id="quiz-email" name="email" placeholder="example@mail.com" value="${selections.email || ''}">
                     <p class="form-hint">Мы вышлем детализацию стоимости. Оставьте хотя бы один контакт.</p>
                 </div>`;
             
@@ -228,8 +228,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let isValid = false;
         
         if (step.type === 'form') {
-            isValid = (selections.phone && selections.phone.length > 5) || 
-                      (selections.email && selections.email.length > 5 && selections.email.includes('@'));
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneClean = (selections.phone || '').replace(/\D/g, '');
+            const isPhoneValid = phoneClean.length >= 10;
+            const isEmailValid = emailRegex.test(selections.email || '');
+            
+            isValid = isPhoneValid || isEmailValid;
         } else if (step.type === 'multi') {
             isValid = (selections[step.id] || []).length > 0;
         } else {
