@@ -56,6 +56,13 @@ export default async function handler(req, res) {
           parse_mode: 'HTML'
         })
       });
+
+      const tgResult = await tgResponse.json();
+      
+      if (!tgResponse.ok) {
+        console.error('Telegram Error:', tgResult);
+        throw new Error(`Telegram API Error: ${tgResult.description || tgResponse.statusText}`);
+      }
       tgSuccess = tgResponse.ok;
     } else {
       console.warn('Telegram tokens missing');
