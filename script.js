@@ -1,1718 +1,512 @@
-:root {
-    --bg-light: #FFFFFF;
-    --bg-alt: #F9F9F9;
-    --text-main: #1A1A1A;
-    --text-muted: #666666;
-    --accent: #FF5722;
-    --border: #E5E5E5;
-    --container-width: 1200px;
-    --transition: all 0.3s ease;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html, body {
-    overflow-x: hidden;
-    width: 100%;
-    position: relative;
-    scroll-behavior: smooth;
-}
-
-body {
-    background-color: var(--bg-light);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
-
-.container {
-    max-width: var(--container-width);
-    margin: 0 auto;
-    padding: 0 2rem;
-    width: 100%;
-}
-
-/* --- Navigation (New Sticky Header) --- */
-
-.status-badge {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    background: var(--bg-alt);
-    padding: 0.5rem 1rem;
-    border-radius: 50px;
-    border: 1px solid var(--border);
-}
-
-.status-badge .dot {
-    width: 8px;
-    height: 8px;
-    background: #4CAF50;
-    border-radius: 50%;
-    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
-    animation: blink 2s infinite;
-}
-
-@keyframes blink {
-    0% { opacity: 1; }
-    50% { opacity: 0.4; }
-    100% { opacity: 1; }
-}
-
-/* --- Global Components --- */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1rem 2.5rem;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 1rem;
-    transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
-    cursor: pointer;
-    text-decoration: none;
-    border: none;
-    text-align: center;
-    white-space: nowrap;
-}
-
-.btn-primary {
-    background: var(--text-main);
-    color: #FFF !important;
-}
-
-.btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.btn-secondary {
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-main);
-}
-
-.btn-secondary:hover {
-    background: var(--bg-alt);
-    border-color: var(--text-main);
-}
-
-.btn-cta {
-    background: linear-gradient(135deg, var(--accent) 0%, #FF9800 100%);
-    color: #FFF;
-    padding: 1.2rem 3.5rem;
-    box-shadow: 0 10px 20px rgba(255, 87, 34, 0.2);
-}
-
-.btn-cta:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(255, 87, 34, 0.35);
-}
-
-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 0.8rem 0;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    z-index: 5000;
-    transition: all 0.3s ease;
-}
-
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.logo {
-    font-size: 1.1rem;
-    font-weight: 900;
-    letter-spacing: -0.5px;
-    text-transform: uppercase;
-}
-
-.desktop-nav {
-    display: block;
-}
-
-.nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-    align-items: center;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: var(--text-main);
-    font-weight: 600;
-    font-size: 0.95rem;
-    transition: var(--transition);
-}
-
-.nav-links a:hover {
-    color: var(--accent);
-}
-
-.nav-links .btn-primary {
-    padding: 0.6rem 1.5rem;
-    font-size: 0.9rem;
-}
-
-/* Burger Menu Styles */
-.burger-menu {
-    display: none;
-    flex-direction: column;
-    gap: 6px;
-    cursor: pointer;
-    padding: 5px;
-    z-index: 6000;
-}
-
-.burger-menu span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--text-main);
-    transition: all 0.3s ease;
-    border-radius: 2px;
-}
-
-.burger-menu.active span:nth-child(1) {
-    transform: translateY(4px) rotate(45deg);
-}
-
-.burger-menu.active span:nth-child(2) {
-    transform: translateY(-4px) rotate(-45deg);
-}
-
-/* Mobile Overlay Styles */
-.mobile-menu-overlay {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 100%;
-    height: 100vh;
-    background: #FFF;
-    z-index: 5500;
-    transition: right 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-    padding: 8rem 2rem;
-}
-
-.mobile-menu-overlay.active {
-    right: 0;
-}
-
-.mobile-menu-content {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.menu-link {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--text-main);
-    text-decoration: none;
-    letter-spacing: -1px;
-}
-
-.menu-footer {
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
-}
-
-.hide-mobile {
-    display: flex;
-}
-
-/* --- Hero Section --- */
-.hero {
-    padding: 12rem 0 10rem 0;
-    position: relative;
-    overflow: hidden;
-    background: #fff;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-}
-
-.hero-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 4rem;
-    width: 100%;
-}
-
-/* Orbit container on the right */
-.hero-visual-wrapper {
-    position: relative;
-    width: 100%;
-    min-width: 0;
-    height: 600px;
-}
-
-.orbit-scene {
-    position: relative;
-    width: 100%;
-    height: 420px;
-    overflow: visible;
-}
-
-.orbit-path-svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    z-index: 0;
-}
-
-.hero-content {
-    position: relative;
-    z-index: 50; 
-    text-align: left;
-    pointer-events: none;
-}
-
-.hero-content * {
-    pointer-events: auto;
-}
-
-.hero-tag {
-    color: var(--accent);
-    font-size: 0.9rem;
-    font-weight: 800;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-bottom: 1.5rem;
-    display: block;
-}
-
-h1 {
-    font-size: 4.8rem;
-    font-weight: 900;
-    line-height: 1.05;
-    margin-bottom: 2rem;
-    letter-spacing: -2.5px;
-    color: #111;
-}
-
-.h1-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-    height: 60px;
-    background: #FFF;
-    border-radius: 50%;
-    margin: 0 10px;
-    vertical-align: middle;
-    border: 1px solid var(--border);
-    overflow: hidden;
-    position: relative;
-    top: -5px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-.h1-icon img {
-    width: 60%;
-    height: 60%;
-    object-fit: contain;
-}
-
-.accent-cursive {
-    font-family: 'Dancing Script', cursive;
-    color: var(--accent);
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-    display: block;
-}
-
-.accent-text {
-    -webkit-text-stroke: 1px var(--text-main);
-    color: transparent;
-}
-
-.hero-subtext {
-    font-size: 1.15rem;
-    color: var(--text-muted);
-    max-width: 500px;
-    margin-bottom: 3rem;
-    line-height: 1.6;
-}
-
-.hero-visual {
-    position: relative;
-    height: 600px;
-}
-
-.floating-mockup {
-    position: absolute;
-    background-size: cover;
-    background-position: center;
-    border-radius: 12px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.1);
-    border: 1px solid var(--border);
-}
-
-.main-mockup {
-    width: 400px;
-    height: 500px;
-    right: 0;
-    top: 0;
-    z-index: 2;
-}
-
-.sub-mockup {
-    width: 250px;
-    height: 400px;
-    left: 0;
-    bottom: 0;
-    z-index: 1;
-    transform: translate(-20%, 20%);
-}
-
-.hero-actions {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: flex-start;
-}
-
-/* --- Static Tech Cluster 3D Glass --- */
-.hero-tech-cluster {
-    position: relative;
-    width: 100%;
-    height: 450px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.tech-badge {
-    position: absolute;
-    animation: float-badge 6s ease-in-out infinite;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
-    cursor: pointer;
-    /* Optional: add a soft drop shadow directly to the badge to emphasize the 3D effect without a harsh black circle */
-    filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.15));
-}
-
-.tech-badge:hover {
-    transform: scale(1.1) translateY(-10px) !important; /* overrides float */
-    filter: drop-shadow(0 25px 35px rgba(255, 87, 34, 0.3));
-    z-index: 20;
-}
-
-.tech-badge img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-}
-
-/* Cluster Layout (Responsive inside the wrapper) */
-.tech-badge-1 { width: 130px; height: 130px; top: 10%; left: 15%; animation-delay: 0s; z-index: 2; }
-.tech-badge-2 { width: 110px; height: 110px; top: 45%; left: 5%; animation-delay: 1.2s; z-index: 3; }
-.tech-badge-3 { width: 90px; height: 90px; bottom: 10%; left: 30%; animation-delay: 2.5s; z-index: 4; }
-.tech-badge-4 { width: 170px; height: 170px; top: 30%; left: 40%; animation-delay: 0.5s; z-index: 10; } /* Center focal point */
-.tech-badge-5 { width: 120px; height: 120px; top: 5%; right: 15%; animation-delay: 1.8s; z-index: 1; }
-.tech-badge-6 { width: 100px; height: 100px; bottom: 25%; right: 10%; animation-delay: 0.8s; z-index: 5; }
-.tech-badge-7 { width: 140px; height: 140px; bottom: 5%; right: 35%; animation-delay: 2.1s; z-index: 6; }
-
-@keyframes float-badge {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-15px); }
-    100% { transform: translateY(0px); }
-}
-
-@keyframes pulse-glow {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.2)); }
-    50% { transform: scale(1.05); filter: drop-shadow(0 0 40px rgba(99, 102, 241, 0.4)); }
-}
-
-/* --- Portfolio Section --- */
-.portfolio {
-    padding: 15rem 0;
-    background: #fff; /* White background */
-    color: var(--text-main);
-    position: relative;
-    overflow: hidden;
-}
-
-.portfolio::before {
-    content: '';
-    position: absolute;
-    top: -30%; right: -20%;
-    width: 800px; height: 800px;
-    background: radial-gradient(circle, rgba(255, 87, 34, 0.03) 0%, rgba(0,0,0,0) 70%);
-    border-radius: 50%;
-    z-index: 0;
-    pointer-events: none;
-}
-
-.portfolio-header {
-    margin-bottom: 8rem;
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-}
-
-.portfolio-header .header-label {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.5rem 1.5rem;
-    border-radius: 50px;
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
-    color: var(--text-main);
-    font-size: 0.85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 2rem;
-}
-
-.portfolio-header .pulse-dot {
-    width: 8px;
-    height: 8px;
-    background: var(--accent);
-    border-radius: 50%;
-    box-shadow: 0 0 10px var(--accent);
-    animation: pulse-dot-anim 2s infinite;
-}
-
-@keyframes pulse-dot-anim {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 87, 34, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 87, 34, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 87, 34, 0); }
-}
-
-.section-title {
-    color: var(--text-main);
-    font-size: 4.5rem;
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 1.5rem;
-    letter-spacing: -1px;
-}
-
-.portfolio-header .gradient-text {
-    background: linear-gradient(135deg, #FF5722 0%, #FF9800 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    position: relative;
-    display: inline-block;
-}
-
-.portfolio-header .gradient-text::after {
-    content: 'Кейсы';
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: -1;
-    background: linear-gradient(135deg, #FF5722 0%, #FF9800 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: blur(25px);
-    opacity: 0.5;
-}
-
-.portfolio-header p {
-    color: var(--text-muted);
-    font-size: 1.25rem;
-    max-width: 600px;
-    line-height: 1.6;
-}
-
-.complex-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 6rem;
-    position: relative;
-    z-index: 1;
-}
-
-.project-card {
-    background: #FFF;
-    border-radius: 32px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-}
-
-.project-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(255, 87, 34, 0.06), transparent 40%);
-    z-index: 3;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-}
-
-.project-card:hover::before {
-    opacity: 1;
-}
-
-.project-card:hover {
-    transform: translateY(-12px);
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
-    border-color: rgba(255, 87, 34, 0.2);
-}
-
-.project-image-wrapper {
-    height: 500px;
-    position: relative;
-    overflow: hidden;
-    background: var(--bg-alt);
-    perspective: 1000px;
-}
-
-.project-img-bg {
-    position: absolute;
-    inset: 0;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-card:hover .project-img-bg {
-    transform: scale(1.05);
-}
-
-.mockup-composition {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.project-card:hover .mockup-composition {
-    transform: scale(1.05);
-}
-
-.device-laptop {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transition: transform 0.8s ease;
-}
-
-/* Hidden laptop notch */
-.device-laptop::before {
-    display: none;
-}
-
-.device-laptop .screen {
-    border-radius: 0;
-    overflow: hidden;
-    height: 100%;
-}
-
-.device-laptop .screen img,
-.device-phone .screen img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top;
-}
-
-.device-phone {
-    display: none !important;
-}
-
-/* iPhone 14 Pro Dynamic Island */
-.device-phone::before {
-    content: '';
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 32px;
-    height: 10px;
-    background: #000;
-    border-radius: 20px;
-    z-index: 10;
-}
-
-.device-phone .screen {
-    border-radius: 20px;
-    overflow: hidden;
-    height: 100%;
-    background: #000;
-}
-
-.device-phone .screen img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-
-
-.project-details {
-    padding: 2rem;
-    background: #FFF;
-    border-top: 1px solid var(--border);
-    position: relative;
-    z-index: 5;
-}
-
-.project-details .tag {
-    display: inline-block;
-    padding: 0.5rem 1.2rem;
-    background: rgba(255, 87, 34, 0.08);
-    color: var(--accent);
-    border-radius: 50px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.project-details h3 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 0.5rem;
-    color: var(--text-main);
-    transition: color 0.3s;
-}
-
-.project-card:hover .project-details h3 {
-    color: var(--accent);
-}
-
-.project-details p {
-    color: var(--text-muted);
-    font-size: 1.05rem;
-    line-height: 1.5;
-    margin-bottom: 1.5rem;
-}
-
-
-
-.view-project {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-    color: var(--text-main);
-    font-weight: 700;
-    font-size: 0.95rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: var(--transition);
-}
-
-.view-project:hover {
-    color: var(--accent);
-    gap: 1rem;
-}
-
-.view-project i, .view-project svg {
-    width: 20px;
-    height: 20px;
-}
-
-.view-project:hover i, .view-project:hover svg {
-    transform: translateX(4px);
-}
-
-/* Strategy Section Styles */
-.strategy {
-    padding: 100px 0;
-    background: var(--bg-main);
-}
-
-.strategy-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-    margin-top: 4rem;
-}
-
-.strategy-step {
-    background: #FFF;
-    padding: 3rem 2rem;
-    border-radius: 24px;
-    border: 1px solid var(--border);
-    position: relative;
-    transition: all 0.5s ease;
-    overflow: hidden;
-}
-
-.strategy-step:hover {
-    transform: translateY(-10px);
-    border-color: var(--accent);
-    box-shadow: 0 20px 40px rgba(255, 87, 34, 0.1);
-}
-
-.step-number {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-    font-size: 4rem;
-    font-weight: 800;
-    color: var(--accent);
-    opacity: 0.1;
-    font-family: var(--font-main);
-    line-height: 1;
-}
-
-.step-icon {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.strategy-step h3 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-    font-weight: 700;
-}
-
-.strategy-step p {
-    color: var(--text-muted);
-    line-height: 1.6;
-}
-
-    margin-bottom: 2rem;
-}
-
-.strategy-list li {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    color: var(--text-muted);
-}
-
-.strategy-list li i {
-    width: 18px;
-    height: 18px;
-    color: #4CAF50;
-}
-
-.strategy-use {
-    font-size: 0.95rem;
-    padding-top: 2rem;
-    border-top: 1px solid var(--border);
-}
-
-/* --- Process Section --- */
-.process {
-    padding: 10rem 0;
-    background: #000;
-    color: #FFF;
-}
-
-.process .section-title {
-    color: #FFF;
-}
-
-.roadmap {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-}
-
-.roadmap-item {
-    position: relative;
-}
-
-.step-num {
-    font-size: 4rem;
-    font-weight: 800;
-    opacity: 0.1;
-    display: block;
-    margin-bottom: -2rem;
-}
-
-.roadmap-item h4 {
-    font-size: 1.25rem;
-    margin-bottom: 1rem;
-    position: relative;
-    z-index: 1;
-}
-
-.roadmap-item p {
-    color: #AAA;
-    font-size: 0.95rem;
-}
-
-/* --- Services Section --- */
-.services {
-    padding: 10rem 0;
-}
-
-.services .section-title {
-    margin-bottom: 4rem;
-}
-
-.services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 3rem;
-}
-
-.service-card {
-    background: var(--bg-alt);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 3rem;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.02);
-    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
-    border-color: var(--accent);
-}
-
-.service-icon-wrapper {
-    width: 80px;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
-    transition: transform 0.4s ease;
-}
-
-.service-card:hover .service-icon-wrapper {
-    transform: scale(1.1) rotate(5deg);
-}
-
-.service-icon-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-}
-
-.service-card h3 {
-    font-size: 1.5rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-    color: var(--text-main);
-}
-
-.service-card p {
-    color: var(--text-muted);
-    line-height: 1.6;
-    margin: 0;
-}
-
-/* --- Quiz Section --- */
-/* --- Quiz Section (Redesign) --- */
-.quiz-section {
-    padding: 8rem 0;
-    background: linear-gradient(180deg, var(--bg-light) 0%, var(--bg-alt) 100%);
-    position: relative;
-}
-
-.quiz-section .portfolio-header {
-    margin-bottom: 6rem;
-}
-
-.quiz-card {
-    max-width: 100%;
-    background: #FFF;
-    padding: 4rem 5rem;
-    border-radius: 40px;
-    border: 1px solid var(--border);
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.04);
-    position: relative;
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 6px;
-    background: var(--bg-alt);
-    margin: 2.5rem 0;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), #FF9800);
-    transition: width 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-    box-shadow: 0 0 10px rgba(255, 87, 34, 0.3);
-}
-
-.quiz-step-header {
-    margin-bottom: 3.5rem;
-    text-align: center;
-}
-
-.quiz-step-header h3 {
-    font-size: 2.8rem;
-    font-weight: 800;
-    margin-bottom: 1rem;
-    letter-spacing: -1px;
-    color: var(--text-main);
-}
-
-.quiz-step-header p {
-    font-size: 1.1rem;
-    color: var(--text-muted);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.options-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem;
-}
-
-.option-btn {
-    padding: 1.8rem 2.5rem;
-    border: 1px solid var(--border);
-    background: var(--bg-light);
-    border-radius: 24px;
-    cursor: pointer;
-    text-align: left;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.option-btn:hover {
-    border-color: var(--accent);
-    background: #FFF;
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba(255, 87, 34, 0.1);
-}
-
-.option-btn.selected {
-    border-color: var(--accent);
-    border-width: 2px;
-    background: rgba(255, 87, 34, 0.05);
-    transform: translateY(-4px);
-    box-shadow: 0 15px 30px rgba(255, 87, 34, 0.15);
-}
-
-.opt-main {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-}
-
-.opt-text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.opt-label {
-    font-weight: 800;
-    font-size: 1.4rem;
-    color: var(--text-main);
-}
-
-.opt-desc {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    line-height: 1.4;
-}
-
-.opt-price {
-    font-weight: 800;
-    color: var(--accent);
-    font-size: 1.1rem;
-    background: rgba(255, 87, 34, 0.08);
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    white-space: nowrap;
-}
-
-.quiz-footer {
-    display: flex;
-    gap: 2rem;
-    margin-top: 3.5rem;
-    justify-content: space-between;
-}
-
-#next-btn {
-    flex: 1;
-    max-width: 300px;
-}
-
-#prev-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-/* --- Marketing Section --- */
-.marketing {
-    padding: 10rem 0;
-    background: var(--bg-alt);
-}
-
-.marketing .portfolio-header {
-    margin-bottom: 5rem;
-}
-
-.marketing-dashboard {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 3rem;
-}
-
-.marketing-card {
-    background: #FFF;
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 3rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-direction: column;
-}
-
-.marketing-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
-}
-
-.card-header {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 3rem;
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: var(--text-main);
-}
-
-.platform-logo {
-    height: 48px;
-    width: auto;
-    object-fit: contain;
-}
-
-.metrics-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-}
-
-.metric-item {
-    padding: 2.5rem 2rem;
-    border-radius: 16px;
-    color: #FFF;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.metric-item.blue   { background: #4285F4; }
-.metric-item.red    { background: #EA4335; }
-.metric-item.green  { background: #34A853; }
-.metric-item.orange { background: #FBBC05; }
-
-.metric-label {
-    font-size: 0.85rem;
-    opacity: 0.9;
-    font-weight: 500;
-}
-
-.metric-value {
-    font-size: 2rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-}
-
-.metrics-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.metric-sub-item .metric-value {
-    color: var(--text-main);
-    font-size: 1.8rem;
-    font-weight: 800;
-    display: block;
-}
-
-.metric-sub-item .metric-label {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    display: block;
-}
-
-.chart-mockup {
-    background: var(--bg-alt);
-    height: 100px;
-    border-radius: 16px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--border);
-}
-
-.chart-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 60%;
-    background: linear-gradient(to top, rgba(255, 87, 34, 0.1), transparent);
-    clip-path: polygon(0% 100%, 10% 80%, 20% 90%, 35% 60%, 50% 70%, 65% 40%, 80% 50%, 100% 20%, 100% 100%);
-}
-
-.chart-label {
-    font-size: 0.85rem;
-    color: var(--accent);
-    font-weight: 700;
-    z-index: 1;
-}
-
-/* --- Contact Section --- */
-.contact {
-    padding: 12rem 0;
-    background: var(--bg-light);
-}
-
-.contact-form {
-    max-width: 800px;
-    margin: 0 auto;
-    background: #FFF;
-    padding: 5rem;
-    border-radius: 40px;
-    border: 1px solid var(--border);
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.04);
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.contact-form input, .contact-form textarea {
-    width: 100%;
-    padding: 1.2rem 1.5rem;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    background: var(--bg-alt);
-    font-size: 1rem;
-    font-family: inherit;
-    transition: all 0.3s ease;
-    color: var(--text-main);
-}
-
-.contact-form input:focus, .contact-form textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    background: #FFF;
-    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.1);
-}
-
-.contact-form textarea {
-    margin-bottom: 2rem;
-    min-height: 150px;
-    resize: none;
-}
-
-.contact-form button[type="submit"] {
-    margin: 2rem auto 0 auto;
-    display: flex;
-    min-width: 280px;
-}
-
-@media (max-width: 600px) {
-    .contact-form { padding: 3rem 2rem; }
-    .form-grid { grid-template-columns: 1fr; }
-}
-
-/* --- Footer --- */
-footer {
-    padding: 5rem 0;
-    border-top: 1px solid var(--border);
-    text-align: center;
-}
-
-/* --- Mobile Navigation --- */
-.mobile-nav {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-top: 1px solid var(--border);
-    padding: 0.8rem 0.5rem calc(0.8rem + env(safe-area-inset-bottom));
-    z-index: 2000;
-    justify-content: space-around;
-    align-items: center;
-    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.05);
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 0.65rem;
-    font-weight: 600;
-    gap: 0.3rem;
-    flex: 1;
-    transition: var(--transition);
-}
-
-.nav-item i {
-    width: 20px;
-    height: 20px;
-    stroke-width: 2px;
-}
-
-.nav-item i, .nav-item svg {
-    width: 22px !important;
-    height: 22px !important;
-    display: block;
-    margin-bottom: 4px;
-    transition: transform 0.3s ease;
-    stroke: currentColor;
-    stroke-width: 2px;
-}
-
-.nav-item.active {
-    color: var(--accent);
-}
-
-.nav-item.active i, .nav-item.active svg {
-    stroke-width: 2.5px;
-}
-
-
-@media (max-width: 768px) {
-    .mobile-nav { display: flex; }
-    .desktop-nav { display: none; }
-    .burger-menu { display: flex; }
-    header nav { display: none; }
-
-    .hide-mobile { display: none !important; }
-    .complex-grid { gap: 3rem; }
-
-
-    /* Fix global overflow and horizontal jitter */
-    html, body {
-        overflow-x: hidden;
-        width: 100%;
-        position: relative;
+document.addEventListener('DOMContentLoaded', () => {
+    // ============================================================
+    //  QUIZ LOGIC
+    // ============================================================
+    const quizContainer = document.getElementById('quiz-container');
+    const nextBtn = document.getElementById('next-btn');
+    const prevBtn = document.getElementById('prev-btn');
+    const progressFill = document.querySelector('.progress-fill');
+
+    let currentStep = 1;
+    const totalSteps = 9;
+    let selections = {
+        type: null,
+        goal: [],
+        platform: null,
+        scale: 'small',
+        sections: [],
+        features: [],
+        content: null,
+        urgency: 'standard',
+        name: '',
+        phone: '',
+        email: ''
+    };
+
+    const steps = {
+        1: {
+            id: 'type',
+            title: 'Какая основная задача стоит?',
+            subtitle: 'Выберите базовую услугу для старта.',
+            type: 'single',
+            options: [
+                { id: 'fix',       label: 'Доработка',           desc: 'Правка дизайна, аналитика и т.д.',    price: 'от 25 000 ₸', icon: 'wrench' },
+                { id: 'redesign',  label: 'Редизайн сайта',      desc: 'Обновление текущего дизайна',        price: 'от 100 000 ₸', icon: 'refresh-cw' },
+                { id: 'figma',     label: 'Дизайн в Figma',      desc: 'Создание прототипа сайта',            price: 'от 10 000 ₸', icon: 'figma' },
+                { id: 'landing',   label: 'Одностраничный сайт', desc: 'Лендинг для целевого действия',       price: 'от 75 000 ₸', icon: 'layout' },
+                { id: 'corporate', label: 'Многостраничный сайт',desc: 'Сложная структура и меню',            price: 'от 150 000 ₸', icon: 'layers' },
+                { id: 'ecommerce', label: 'Интернет-магазин',    desc: 'Каталог, корзина и оплата',           price: 'от 150 000 ₸', icon: 'shopping-cart' }
+            ]
+        },
+        2: {
+            id: 'goal',
+            title: 'Какие задачи должен решать сайт?',
+            subtitle: 'Выберите основные цели (можно несколько).',
+            type: 'multi',
+            options: [
+                { id: 'leads', label: 'Заявки и лиды', desc: 'Сбор контактов потенциальных клиентов', price: 'Standard', icon: 'target' },
+                { id: 'sales', label: 'Продажи онлайн', desc: 'Прямая торговля товарами или услугами', price: 'Standard', icon: 'shopping-bag' },
+                { id: 'brand', label: 'Имидж и бренд', desc: 'Повышение узнаваемости и доверия', price: 'Standard', icon: 'award' },
+                { id: 'info',  label: 'Инфо / Портфолио', desc: 'Демонстрация работ или знаний', price: 'Standard', icon: 'eye' }
+            ]
+        },
+        3: {
+            id: 'platform',
+            title: 'На чем будет сделан сайт?',
+            subtitle: 'Выберите технологию реализации проекта.',
+            type: 'single',
+            options: [
+                { id: 'tilda',  label: 'Tilda Publishing', desc: 'Быстрый запуск и легкое управление', price: 'Standard', icon: 'layout' },
+                { id: 'custom', label: 'Digital Engineering', desc: 'Максимальная скорость, SEO и любая сложность', price: '+20%', icon: 'code-2' }
+            ]
+        },
+        4: {
+            id: 'scale',
+            title: 'Объем проекта',
+            subtitle: 'Примерное количество блоков или страниц.',
+            type: 'single',
+            options: [
+                { id: 'small',  label: 'Малый',        desc: 'До 5 блоков / страниц', price: 'x1.0', icon: 'monitor' },
+                { id: 'medium', label: 'Средний',      desc: '5-10 блоков / страниц', price: 'x1.3', icon: 'copy' },
+                { id: 'large',  label: 'Масштабный',   desc: '10+ блоков / страниц',  price: 'x1.8', icon: 'layout' }
+            ]
+        },
+        5: {
+            id: 'sections',
+            title: 'Какие разделы нужны?',
+            subtitle: 'Выберите необходимые страницы / блоки.',
+            type: 'multi',
+            options: [
+                { id: 'home',    label: 'Главная',       desc: 'Основная страница', price: 'Free', icon: 'home' },
+                { id: 'about',   label: 'О компании',    desc: 'История, команда', price: 'Free', icon: 'info' },
+                { id: 'services',label: 'Услуги',        desc: 'Каталог услуг', price: 'Free', icon: 'briefcase' },
+                { id: 'pricing', label: 'Цены / Прайс',  desc: 'Тарифы и стоимость', price: 'Free', icon: 'credit-card' },
+                { id: 'cases',   label: 'Кейсы / Работы',desc: 'Портфолио', price: 'Free', icon: 'image' },
+                { id: 'team',    label: 'Команда',       desc: 'Сотрудники, лица', price: 'Free', icon: 'users' },
+                { id: 'blog',    label: 'Блог / Новости',desc: 'Статьи и анонсы', price: 'Free', icon: 'file-text' },
+                { id: 'reviews', label: 'Отзывы',        desc: 'Социальное подтверждение', price: 'Free', icon: 'message-square' },
+                { id: 'faq',     label: 'FAQ',           desc: 'Вопросы и ответы', price: 'Free', icon: 'help-circle' },
+                { id: 'gallery', label: 'Галерея',       desc: 'Фото и видео', price: 'Free', icon: 'camera' },
+                { id: 'contacts',label: 'Контакты',      desc: 'Карта, формы, соцсети', price: 'Free', icon: 'map-pin' }
+            ]
+        },
+        6: {
+            id: 'features',
+            title: 'Нужны ли дополнительные услуги?',
+            subtitle: 'Добавьте опции для усиления проекта (можно выбрать несколько).',
+            type: 'multi',
+            options: [
+                { id: 'ads',       label: 'Настройка рекламы',   desc: 'Google / Яндекс',                     price: 'от 75 000 ₸', icon: 'trending-up' },
+                { id: 'copy',      label: 'Написание текстов',   desc: 'Копирайтинг',                         price: 'Бонусом',   icon: 'edit-3' },
+                { id: 'crm',       label: 'Интеграция CRM',      desc: 'AmoCRM, Bitrix24 и др.',              price: 'от 5 000 ₸',  icon: 'database' },
+                { id: 'ai',        label: 'ИИ-ассистент',        desc: 'Умный чат-бот для продаж',            price: 'от 50 000 ₸', icon: 'bot' },
+                { id: 'anim',      label: '3D и анимации',       desc: 'WOW-эффекты для сайта',              price: 'от 30 000 ₸', icon: 'box' }
+            ]
+        },
+        7: {
+            id: 'content',
+            title: 'Готовность контента и дизайн',
+            subtitle: 'Что у вас уже есть на данный момент?',
+            type: 'single',
+            options: [
+                { id: 'all',     label: 'Всё готово',      desc: 'Есть тексты, фото и логотип', price: 'Standard', icon: 'check-circle' },
+                { id: 'refs',    label: 'Есть референсы',  desc: 'Знаю что хочу, но нужен контент', price: 'Standard', icon: 'bookmark' },
+                { id: 'site',    label: 'Есть сайт',       desc: 'Нужен редизайн / перенос', price: 'Standard', icon: 'refresh-cw' },
+                { id: 'nothing', label: 'Ничего нет',      desc: 'Нужна помощь с нуля', price: '+15%', icon: 'sparkles' }
+            ]
+        },
+        8: {
+            id: 'urgency',
+            title: 'Сроки реализации',
+            subtitle: 'Насколько срочно вам нужен результат?',
+            type: 'single',
+            options: [
+                { id: 'standard', label: 'В стандартном темпе', desc: 'Обычный график разработки',             price: 'x1.0', icon: 'clock' },
+                { id: 'urgent',   label: 'Нужно срочно',        desc: 'Приоритет в очереди',                   price: 'x1.3', icon: 'zap' }
+            ]
+        },
+        9: {
+            id: 'contacts',
+            title: 'Куда отправить расчет?',
+            subtitle: 'Оставьте ваши контакты, чтобы мы закрепили за вами стоимость.',
+            type: 'form'
+        }
+    };
+
+    const basePrices = { fix: 25000, redesign: 100000, figma: 10000, landing: 75000, corporate: 150000, ecommerce: 150000 };
+    const featurePrices = { ads: 75000, copy: 0, crm: 5000, ai: 50000, anim: 30000 };
+    const scaleMultipliers = { small: 1.0, medium: 1.3, large: 1.8 };
+    const urgencyMultipliers = { standard: 1.0, urgent: 1.3 };
+
+    function calculateTotalPrice(sel) {
+        let total = basePrices[sel.type] || 0;
+        (sel.features || []).forEach(f => { total += featurePrices[f] || 0; });
+        if (sel.platform === 'custom') total *= 1.2;
+        if (sel.content === 'nothing') total *= 1.15;
+        total *= scaleMultipliers[sel.scale] || 1;
+        total *= urgencyMultipliers[sel.urgency] || 1;
+        return Math.round(total);
     }
 
-    .container { 
-        padding: 0 1.25rem; 
-        max-width: 100vw;
-        overflow: hidden;
+    function renderStep() {
+        const step = steps[currentStep];
+        const stepId = step.id;
+
+        if (step.type === 'form') {
+            quizContainer.innerHTML = `
+                <div class="quiz-step-header">
+                    <h3>${step.title}</h3>
+                    <p>${step.subtitle}</p>
+                </div>
+                <div class="quiz-form">
+                    <input type="text" id="quiz-name" name="name" placeholder="Ваше имя" value="${selections.name || ''}">
+                    <input type="tel" id="quiz-phone" name="phone" placeholder="+7 (___) ___-__-__" value="${selections.phone || ''}">
+                    <input type="email" id="quiz-email" name="email" placeholder="example@mail.com" value="${selections.email || ''}">
+                    <p class="form-hint">Мы вышлем детализацию стоимости. Оставьте хотя бы один контакт.</p>
+                </div>`;
+            
+            const nameInput = document.getElementById('quiz-name');
+            const phoneInput = document.getElementById('quiz-phone');
+            const emailInput = document.getElementById('quiz-email');
+            
+            nameInput.addEventListener('input', (e) => { selections.name = e.target.value; updateButtons(); });
+            phoneInput.addEventListener('input', (e) => { selections.phone = e.target.value; updateButtons(); });
+            emailInput.addEventListener('input', (e) => { selections.email = e.target.value; updateButtons(); });
+        } else {
+            quizContainer.innerHTML = `
+                <div class="quiz-step-header">
+                    <h3>${step.title}</h3>
+                    <p>${step.subtitle}</p>
+                </div>
+                <div class="options-grid">
+                    ${step.options.map(opt => {
+                        const isSelected = step.type === 'multi'
+                            ? (selections[stepId] || []).includes(opt.id)
+                            : selections[stepId] === opt.id;
+                        return `
+                            <button class="option-btn ${isSelected ? 'selected' : ''}" data-id="${opt.id}">
+                                <div class="opt-main">
+                                    <i data-lucide="${opt.icon}"></i>
+                                    <div class="opt-text">
+                                        <span class="opt-label">${opt.label}</span>
+                                        <span class="opt-desc">${opt.desc}</span>
+                                    </div>
+                                </div>
+                                <span class="opt-price">${opt.price}</span>
+                            </button>`;
+                    }).join('')}
+                </div>`;
+
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                btn.addEventListener('click', () => handleSelect(stepId, btn.dataset.id, step.type));
+            });
+        }
+
+        updateButtons();
+        updateProgress();
+
+        try { lucide.createIcons(); } catch (e) {}
     }
 
-    /* Hero App-like Overhaul */
-    .hero {
-        padding-top: 4rem;
-        padding-bottom: 2rem;
-        min-height: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+    function handleSelect(stepId, value, type) {
+        if (type === 'multi') {
+            if (!selections[stepId]) selections[stepId] = [];
+            const idx = selections[stepId].indexOf(value);
+            if (idx > -1) selections[stepId].splice(idx, 1);
+            else selections[stepId].push(value);
+        } else {
+            selections[stepId] = value;
+        }
+        renderStep();
     }
 
-    .hero-container { 
-        grid-template-columns: 1fr; 
-        text-align: center;
-        gap: 1.5rem;
+    function updateButtons() {
+        prevBtn.disabled = currentStep === 1;
+        nextBtn.textContent = currentStep === totalSteps ? 'Получить расчет' : 'Далее';
+        
+        const step = steps[currentStep];
+        let isValid = false;
+        
+        if (step.type === 'form') {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const phoneClean = (selections.phone || '').replace(/\D/g, '');
+            const isPhoneValid = phoneClean.length >= 10;
+            const isEmailValid = emailRegex.test(selections.email || '');
+            
+            isValid = isPhoneValid || isEmailValid;
+        } else if (step.type === 'multi') {
+            isValid = (selections[step.id] || []).length > 0;
+        } else {
+            isValid = selections[step.id] !== null;
+        }
+        
+        nextBtn.disabled = !isValid;
     }
 
-    .hero-content {
-        text-align: center;
-        width: 100%;
-        padding: 0;
+    function updateProgress() {
+        progressFill.style.width = `${(currentStep / totalSteps) * 100}%`;
     }
 
-    h1 { 
-        font-size: clamp(2rem, 10vw, 2.8rem); 
-        letter-spacing: -1.5px;
-        margin-bottom: 1rem;
-        line-height: 1.1;
+    async function submitQuiz() {
+        nextBtn.disabled = true;
+        nextBtn.textContent = 'Отправка...';
+        
+        const finalPrice = calculateTotalPrice(selections);
+        const formatted = new Intl.NumberFormat('ru-RU').format(finalPrice);
+        
+        const getLabel = (stepIdx, id) => steps[stepIdx].options.find(o => o.id === id)?.label || '—';
+        const getMultiLabels = (stepIdx, ids) => (ids || []).map(id => steps[stepIdx].options.find(o => o.id === id)?.label).filter(Boolean).join(', ') || 'Нет';
+
+        const typeLabel = getLabel(1, selections.type);
+        const goalLabel = getMultiLabels(2, selections.goal);
+        const platformLabel = getLabel(3, selections.platform);
+        const scaleLabel = getLabel(4, selections.scale);
+        const sectionsLabel = getMultiLabels(5, selections.sections);
+        const featuresLabel = getMultiLabels(6, selections.features);
+        const contentLabel = getLabel(7, selections.content);
+        const urgencyLabel = getLabel(8, selections.urgency);
+
+        const summaryMessage = `
+            🚀 НОВАЯ ЗАЯВКА ИЗ КВИЗА (Elite)
+            Имя: ${selections.name || 'Не указано'}
+            Телефон: ${selections.phone || 'Не указан'}
+            Email: ${selections.email || 'Не указан'}
+            ---
+            Услуга: ${typeLabel}
+            Цель: ${goalLabel}
+            Платформа: ${platformLabel}
+            Объем: ${scaleLabel}
+            Разделы: ${sectionsLabel}
+            Фичи: ${featuresLabel}
+            Контент: ${contentLabel}
+            Срок: ${urgencyLabel}
+            ---
+            Итоговая оценка: ${formatted} ₸
+        `.replace(/\s+/g, ' ').trim();
+
+        const payload = {
+            name: selections.name,
+            phone: selections.phone,
+            email: selections.email,
+            typeLabel, goalLabel, platformLabel, scaleLabel, sectionsLabel, featuresLabel, contentLabel, urgencyLabel,
+            formattedPrice: formatted,
+            message: summaryMessage,
+            _subject: `Elite Quiz: ${typeLabel} (${selections.name || 'Без имени'})`
+        };
+
+        try {
+            await fetch('/api/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+        } catch (e) {
+            console.warn('Fallback to direct Formspree...');
+            try {
+                await fetch(`https://formspree.io/f/xpqbndjo`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+            } catch (err) {}
+        }
+
+        renderFinalResult(formatted, typeLabel, platformLabel, scaleLabel, featuresLabel, urgencyLabel);
     }
 
-    .hero-subtext {
-        font-size: 0.95rem;
-        margin: 0 auto 2rem auto;
-        max-width: 100%;
+
+
+    function renderFinalResult(formatted, typeLabel, platformLabel, scaleLabel, featLabels, urgencyLabel) {
+        quizContainer.innerHTML = `
+            <div class="result-card">
+                <div class="price-badge">
+                    <span class="price-label">Ориентировочная стоимость</span>
+                    <h2 class="price-value">${formatted} ₸</h2>
+                </div>
+                <div class="result-summary">
+                    <div class="summary-item">
+                        <span class="summary-label">Услуга:</span>
+                        <span class="summary-value">${typeLabel}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Платформа:</span>
+                        <span class="summary-value">${platformLabel}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Объем:</span>
+                        <span class="summary-value">${scaleLabel}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Опции:</span>
+                        <span class="summary-value">${featLabels}</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Срок:</span>
+                        <span class="summary-value">${urgencyLabel}</span>
+                    </div>
+                </div>
+                <a class="btn btn-cta" href="#" target="_blank">
+                    <i data-lucide="message-circle"></i> Написать в WhatsApp
+                </a>
+            </div>`;
+
+        const waMessage = encodeURIComponent(`Здравствуйте! Я прошел Elite Квиз на вашем сайте. Результаты:
+- Услуга: ${typeLabel}
+- Платформа: ${platformLabel}
+- Объем: ${scaleLabel}
+- Фичи: ${featLabels}
+- Срок: ${urgencyLabel}
+- Оценка: ${formatted} ₸
+
+Контакт: ${selections.name || 'Без имени'}, ${selections.phone || selections.email}
+Хочу обсудить детали проекта.`);
+
+        const waBtn = quizContainer.querySelector('.btn-cta');
+        if (waBtn) waBtn.href = `https://wa.me/77770752008?text=${waMessage}`;
+
+        nextBtn.style.display = 'none';
+        prevBtn.textContent = 'Начать заново';
+        prevBtn.onclick = () => location.reload();
+        progressFill.style.width = '100%';
+        try { lucide.createIcons(); } catch (e) {}
     }
 
-    .hero-actions {
-        flex-direction: column;
-        gap: 0.8rem;
-        width: 100%;
+    nextBtn.addEventListener('click', () => {
+        if (currentStep < totalSteps) { currentStep++; renderStep(); }
+        else submitQuiz();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        if (currentStep > 1) { currentStep--; renderStep(); }
+    });
+
+    renderStep();
+
+
+
+    // ============================================================
+    //  SCROLL REVEAL
+    // ============================================================
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+        });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // ============================================================
+    //  CONTACT FORM AJAX SUBMISSION (BACKEND PROXY)
+    // ============================================================
+    const contactForm = document.getElementById('contact-form');
+    const contactStatus = document.getElementById('contact-status');
+    const contactSubmit = document.getElementById('contact-submit');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(contactForm);
+            const data = Object.fromEntries(formData.entries());
+            const formAction = contactForm.getAttribute('action'); // Fallback URL
+            
+            contactSubmit.disabled = true;
+            contactSubmit.textContent = 'Отправка...';
+            
+            try {
+                // 1. Пытаемся отправить через наш API (Telegram + Formspree)
+                const response = await fetch('/api/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    showSuccess();
+                } else {
+                    // Если API не ответил (например, нет переменных окружения), 
+                    // пробуем отправить напрямую в Formspree
+                    throw new Error('API failed, trying fallback');
+                }
+            } catch (error) {
+                console.warn('Primary API failed, attempting direct Formspree submission...', error);
+                
+                try {
+                    const fallbackResponse = await fetch(formAction, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+                    
+                    if (fallbackResponse.ok) {
+                        showSuccess();
+                    } else {
+                        throw new Error('Fallback failed too');
+                    }
+                } catch (fallbackError) {
+                    showError();
+                }
+            }
+        });
+
+        function showSuccess() {
+            contactStatus.textContent = '✅ Заявка успешно отправлена! Мы скоро свяжемся с вами.';
+            contactStatus.style.color = '#4CAF50';
+            contactStatus.style.display = 'block';
+            contactForm.reset();
+            contactSubmit.textContent = 'Отправлено';
+            setTimeout(() => {
+                contactSubmit.disabled = false;
+                contactSubmit.textContent = 'Отправить еще раз';
+            }, 3000);
+        }
+
+        function showError() {
+            contactStatus.textContent = '❌ Ошибка отправки. Пожалуйста, напишите нам в WhatsApp или Telegram.';
+            contactStatus.style.color = '#f44336';
+            contactStatus.style.display = 'block';
+            contactSubmit.disabled = false;
+            contactSubmit.textContent = 'Попробовать снова';
+        }
     }
 
-    .hero-actions .btn {
-        width: 100%;
-        padding: 1.1rem;
-        font-size: 1rem;
+    // Burger Menu Logic
+    const burgerToggle = document.getElementById('burger-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuLinks = document.querySelectorAll('.menu-link');
+
+    if (burgerToggle && mobileMenu) {
+        burgerToggle.addEventListener('click', () => {
+            burgerToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : 'auto';
+        });
+
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                burgerToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
     }
 
-    .hero-visual-wrapper {
-        height: 400px;
-        min-width: 0;
-        margin-top: 1rem;
-    }
-
-    .orbit-scene {
-        height: 350px;
-    }
-
-    .hero-tech-cluster {
-        height: 380px;
-        transform: scale(0.8);
-        transform-origin: center center;
-    }
-
-    .tech-badge-1 { top: 0% !important; left: 5% !important; }
-    .tech-badge-2 { top: 40% !important; left: -5% !important; }
-    .tech-badge-3 { bottom: 5% !important; left: 15% !important; } /* Tilda */
-    .tech-badge-4 { top: 25% !important; left: 35% !important; } /* HTML5 (Center) */
-    .tech-badge-5 { top: 5% !important; right: 5% !important; }
-    .tech-badge-6 { bottom: 20% !important; right: -5% !important; } /* Yandex */
-    .tech-badge-7 { bottom: -5% !important; right: 20% !important; }
-
-    /* Sections & Text */
-    .section-title { 
-        font-size: clamp(1.7rem, 8vw, 2.2rem) !important;
-        line-height: 1.2;
-    }
-
-    .portfolio-header {
-        margin-bottom: 2.5rem !important;
-    }
-
-    .portfolio-header .header-label {
-        font-size: 0.75rem;
-        padding: 0.4rem 1.2rem;
-    }
-
-    /* Marketing Dashboard */
-    .marketing {
-        padding: 6rem 0;
-    }
-
-    .marketing-dashboard {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .marketing-card {
-        padding: 1.5rem;
-        border-radius: 20px;
-    }
-
-    .marketing-card h3 {
-        font-size: 1.3rem;
-    }
-
-    /* Quiz App-feel */
-    .quiz-card {
-        padding: 1.5rem 0.75rem !important;
-        border-radius: 20px;
-        margin-bottom: 7rem;
-    }
-
-    .quiz-step-header h3 {
-        font-size: 1.4rem !important;
-        line-height: 1.3;
-    }
-
-    .options-grid {
-        grid-template-columns: 1fr;
-        gap: 0.8rem;
-    }
-
-    .option-btn {
-        padding: 1.2rem !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 0.75rem !important;
-    }
-
-    .opt-main {
-        gap: 1rem !important;
-    }
-
-    .opt-label {
-        font-size: 1.1rem !important;
-    }
-
-    .opt-desc {
-        font-size: 0.85rem !important;
-    }
-
-    .opt-price {
-        font-size: 0.9rem !important;
-    }
-
-    .quiz-footer {
-        flex-direction: column !important;
-        gap: 0.75rem !important;
-    }
-
-    #next-btn, #prev-btn {
-        max-width: 100% !important;
-        width: 100% !important;
-        flex: none !important;
-    }
-
-    /* Portfolio Items */
-    .portfolio {
-        padding: 8rem 0;
-    }
-
-    .project-card {
-        flex-direction: column !important;
-        min-height: auto !important;
-        margin-bottom: 3rem;
-        background: #fff;
-    }
-
-    .project-card:nth-child(even) {
-        flex-direction: column !important;
-    }
-
-    .project-image-wrapper {
-        min-height: 280px !important;
-        height: 280px !important;
-        width: 100% !important;
-        flex: none !important;
-    }
-
-    .project-details {
-        flex: none !important;
-        width: 100% !important;
-        padding: 2rem 1.5rem !important;
-        text-align: left !important;
-    }
-
-    .project-details h3 {
-        font-size: 1.5rem;
-    }
-
-    .mockup-composition {
-        transform: none !important;
-        width: 100% !important;
-        height: 100% !important;
-        left: 0 !important;
-        top: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-
-    .device-laptop { 
-        width: 100% !important; 
-        height: 100% !important;
-        left: 0 !important; 
-        top: 0 !important;
-        transform: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        border: none !important;
-        border-radius: 0 !important;
-    }
-
-    /* Footer adjustments */
-    footer { 
-        padding: 4rem 0 10rem 0; 
-    }
-
-    /* Contact Form */
-    .contact-form {
-        padding: 2rem 1rem;
-    }
-
-    .form-grid {
-        gap: 1rem;
-    }
-
-    .services-grid, .roadmap {
-        grid-template-columns: 1fr !important;
-        gap: 1.5rem;
-    }
-
-    .service-card {
-        padding: 2rem 1.5rem;
-        width: 100% !important;
-    }
-
-    /* Hide unnecessary desktop animations or complex elements */
-    .pulse-dot-bg { display: none; }
-}
-
-/* --- Quiz Form Step --- */
-.quiz-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    max-width: 500px;
-    margin: 2rem auto;
-    animation: fadeIn 0.5s ease-out;
-}
-
-.quiz-form input {
-    width: 100%;
-    padding: 1.2rem 1.5rem;
-    border-radius: 12px;
-    border: 1px solid rgba(0,0,0,0.1);
-    background: #fff;
-    font-size: 1rem;
-    transition: all 0.3s;
-}
-
-.quiz-form input:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 4px rgba(255, 87, 34, 0.1);
-}
-
-.form-hint {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    text-align: center;
-    line-height: 1.5;
-}
-
-/* --- Quiz Result Styles --- */
-.result-card {
-    text-align: center;
-    padding: 2rem;
-    animation: fadeIn 0.6s ease-out;
-}
-
-.price-badge {
-    margin-bottom: 2.5rem;
-}
-
-.price-label {
-    display: block;
-    color: var(--text-muted);
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 0.5rem;
-}
-
-.price-value {
-    font-size: clamp(2.5rem, 8vw, 4rem);
-    color: var(--accent);
-    font-weight: 800;
-    line-height: 1;
-}
-
-.result-summary {
-    text-align: left;
-    background: var(--bg-alt);
-    padding: 2rem;
-    border-radius: 20px;
-    margin-bottom: 3rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.summary-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 0.8rem;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-}
-
-.summary-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-}
-
-.summary-label {
-    font-weight: 700;
-    color: var(--text-main);
-    font-size: 0.95rem;
-}
-
-.summary-value {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    text-align: right;
-    max-width: 60%;
-}
-
-@media (max-width: 768px) {
-    .result-card {
-        padding: 1rem 0;
-    }
-    
-    .result-summary {
-        padding: 1.5rem;
-    }
-    
-    .summary-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.25rem;
-    }
-    
-    .summary-value {
-        text-align: left;
-        max-width: 100%;
-    }
-}
+    // Project Card Spotlight Effect
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+});
