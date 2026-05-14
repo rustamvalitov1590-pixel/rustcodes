@@ -56,8 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
             subtitle: 'Выберите технологию реализации проекта.',
             type: 'single',
             options: [
-                { id: 'tilda',  label: 'Tilda Publishing', desc: 'Быстрый запуск и легкое управление', price: 'Standard', icon: 'layout' },
-                { id: 'custom', label: 'Digital Engineering', desc: 'Максимальная скорость, SEO и любая сложность', price: '+20%', icon: 'code-2' }
+                { id: 'tilda',  label: 'Tilda Publishing', desc: 'Конструктор: быстрый запуск и легкое управление', price: 'Standard', icon: 'layout' },
+                { id: 'custom', label: 'Digital Engineering', desc: 'Самописный сайт: макс. скорость, SEO и любая сложность', price: '+20%', icon: 'code-2' }
             ]
         },
         4: {
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         6: {
             id: 'features',
             title: 'Нужны ли дополнительные услуги?',
-            subtitle: 'Добавьте опции для усиления проекта (можно выбрать несколько).',
+            subtitle: 'Добавьте опции для усиления проекта (можно пропустить).',
             type: 'multi',
             options: [
                 { id: 'ads',       label: 'Настройка рекламы',   desc: 'Google / Яндекс',                     price: 'от 75 000 ₸', icon: 'trending-up' },
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             isValid = isPhoneValid || isEmailValid;
         } else if (step.type === 'multi') {
-            isValid = (selections[step.id] || []).length > 0;
+            isValid = step.id === 'features' ? true : (selections[step.id] || []).length > 0;
         } else {
             isValid = selections[step.id] !== null;
         }
