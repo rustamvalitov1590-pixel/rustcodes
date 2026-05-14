@@ -170,7 +170,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const emailInput = document.getElementById('quiz-email');
             
             nameInput.addEventListener('input', (e) => { selections.name = e.target.value; updateButtons(); });
-            phoneInput.addEventListener('input', (e) => { selections.phone = e.target.value; updateButtons(); });
+            phoneInput.addEventListener('input', (e) => { 
+                applyPhoneMask(e.target);
+                selections.phone = e.target.value; 
+                updateButtons(); 
+            });
             emailInput.addEventListener('input', (e) => { selections.email = e.target.value; updateButtons(); });
         } else {
             quizContainer.innerHTML = `
@@ -266,23 +270,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const contentLabel = getLabel(7, selections.content);
         const urgencyLabel = getLabel(8, selections.urgency);
 
-        const summaryMessage = `
-            🚀 НОВАЯ ЗАЯВКА ИЗ КВИЗА (Elite)
-            Имя: ${selections.name || 'Не указано'}
-            Телефон: ${selections.phone || 'Не указан'}
-            Email: ${selections.email || 'Не указан'}
-            ---
-            Услуга: ${typeLabel}
-            Цель: ${goalLabel}
-            Платформа: ${platformLabel}
-            Объем: ${scaleLabel}
-            Разделы: ${sectionsLabel}
-            Фичи: ${featuresLabel}
-            Контент: ${contentLabel}
-            Срок: ${urgencyLabel}
-            ---
-            Итоговая оценка: ${formatted} ₸
-        `.replace(/\s+/g, ' ').trim();
+        const summaryMessage = `🚀 НОВАЯ ЗАЯВКА ИЗ КВИЗА (Elite)
+Имя: ${selections.name || 'Не указано'}
+Телефон: ${selections.phone || 'Не указан'}
+Email: ${selections.email || 'Не указан'}
+---
+Услуга: ${typeLabel}
+Цель: ${goalLabel}
+Платформа: ${platformLabel}
+Объем: ${scaleLabel}
+Разделы: ${sectionsLabel}
+Фичи: ${featuresLabel}
+Контент: ${contentLabel}
+Срок: ${urgencyLabel}
+---
+Итоговая оценка: ${formatted} ₸`.trim();
 
         const payload = {
             name: selections.name,
@@ -291,15 +293,17 @@ document.addEventListener('DOMContentLoaded', () => {
             typeLabel, goalLabel, platformLabel, scaleLabel, sectionsLabel, featuresLabel, contentLabel, urgencyLabel,
             formattedPrice: formatted,
             message: summaryMessage,
+            _gotcha: "",
             _subject: `Elite Quiz: ${typeLabel} (${selections.name || 'Без имени'})`
         };
 
         try {
-            await fetch('/api/submit', {
+            const response = await fetch('/api/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
+            if (!response.ok) throw new Error('API failed');
         } catch (e) {
             console.warn('Fallback to direct Formspree...');
             try {
@@ -308,7 +312,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-            } catch (err) {}
+            } catch (err) {
+                console.error('Fallback also failed:', err);
+            }
         }
 
         renderFinalResult(formatted, typeLabel, platformLabel, scaleLabel, featuresLabel, urgencyLabel);
@@ -401,6 +407,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
     const contactStatus = document.getElementById('contact-status');
     const contactSubmit = document.getElementById('contact-submit');
+    const contactPhone = document.getElementById('contact-phone');
+
+    if (contactPhone) {
+        contactPhone.addEventListener('input', (e) => applyPhoneMask(e.target));
+    }
 
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
@@ -509,4 +520,27 @@ document.addEventListener('DOMContentLoaded', () => {
             card.style.setProperty('--mouse-y', `${y}px`);
         });
     });
+
+    // ============================================================
+    //  PHONE MASK HELPER
+    // ============================================================
+    function applyPhoneMask(input) {
+        let matrix = "+7 (___) ___-__-__",
+            i = 0,
+            val = input.value.replace(/\D/g, "");
+        
+        if (val.length === 0) {
+            input.value = "";
+            return;
+        }
+
+        // Если введено 11 цифр и первая 7 или 8 — убираем её, так как +7 уже есть в маске
+        if (val.length >= 11 && (val[0] === '7' || val[0] === '8')) {
+            val = val.slice(1);
+        }
+
+        input.value = matrix.replace(/./g, function(a) {
+            return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a
+        });
+    }
 });
