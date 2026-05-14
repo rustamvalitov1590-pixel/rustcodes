@@ -170,11 +170,46 @@ document.addEventListener('DOMContentLoaded', () => {
             const emailInput = document.getElementById('quiz-email');
             
             nameInput.addEventListener('input', (e) => { selections.name = e.target.value; updateButtons(); });
-            phoneInput.addEventListener('input', (e) => { 
-                applyPhoneMask(e.target);
-                selections.phone = e.target.value; 
-                updateButtons(); 
+            
+            // Маска для телефона
+            phoneInput.addEventListener('input', (e) => {
+                let value = e.target.value.replace(/\D/g, '');
+                let formatted = '';
+
+                if (value.startsWith('7') || value.startsWith('8')) {
+                    const firstChar = value.startsWith('7') ? '+7' : '8';
+                    formatted = firstChar;
+                    if (value.length > 1) {
+                        formatted += ' (' + value.substring(1, 4);
+                    }
+                    if (value.length >= 5) {
+                        formatted += ') ' + value.substring(4, 7);
+                    }
+                    if (value.length >= 8) {
+                        formatted += '-' + value.substring(7, 9);
+                    }
+                    if (value.length >= 10) {
+                        formatted += '-' + value.substring(9, 11);
+                    }
+                } else if (value.length > 0) {
+                    // Если начинают не с 7 или 8, подставляем +7
+                    formatted = '+7 (' + value.substring(0, 3);
+                    if (value.length >= 4) {
+                        formatted += ') ' + value.substring(3, 6);
+                    }
+                    if (value.length >= 7) {
+                        formatted += '-' + value.substring(6, 8);
+                    }
+                    if (value.length >= 9) {
+                        formatted += '-' + value.substring(8, 10);
+                    }
+                }
+
+                e.target.value = formatted;
+                selections.phone = formatted;
+                updateButtons();
             });
+
             emailInput.addEventListener('input', (e) => { selections.email = e.target.value; updateButtons(); });
         } else {
             quizContainer.innerHTML = `
@@ -378,12 +413,22 @@ Email: ${selections.email || 'Не указан'}
     }
 
     nextBtn.addEventListener('click', () => {
-        if (currentStep < totalSteps) { currentStep++; renderStep(); }
+        if (currentStep < totalSteps) { 
+            currentStep++; 
+            renderStep(); 
+            const quizSection = document.getElementById('quiz');
+            if (quizSection) quizSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
         else submitQuiz();
     });
 
     prevBtn.addEventListener('click', () => {
-        if (currentStep > 1) { currentStep--; renderStep(); }
+        if (currentStep > 1) { 
+            currentStep--; 
+            renderStep(); 
+            const quizSection = document.getElementById('quiz');
+            if (quizSection) quizSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
     });
 
     renderStep();
@@ -407,11 +452,6 @@ Email: ${selections.email || 'Не указан'}
     const contactForm = document.getElementById('contact-form');
     const contactStatus = document.getElementById('contact-status');
     const contactSubmit = document.getElementById('contact-submit');
-    const contactPhone = document.getElementById('contact-phone');
-
-    if (contactPhone) {
-        contactPhone.addEventListener('input', (e) => applyPhoneMask(e.target));
-    }
 
     if (contactForm) {
         contactForm.addEventListener('submit', async (e) => {
@@ -520,31 +560,4 @@ Email: ${selections.email || 'Не указан'}
             card.style.setProperty('--mouse-y', `${y}px`);
         });
     });
-
-    // ============================================================
-    //  PHONE MASK HELPER
-    // ============================================================
-    function applyPhoneMask(input) {
-        let matrix = "+7 (___) ___-__-__",
-            i = 0,
-            val = input.value.replace(/\D/g, "");
-        
-        if (val.length === 0) {
-            input.value = "";
-            return;
-        }
-
-        // Если первая цифра 8, убираем её (заменяется на +7 из маски)
-        if (val[0] === '8') {
-            val = val.slice(1);
-        } 
-        // Если первая цифра 7 и это полный номер (11 цифр), убираем её
-        else if (val[0] === '7' && val.length > 10) {
-            val = val.slice(1);
-        }
-
-        input.value = matrix.replace(/./g, function(a) {
-            return /[_\d]/.test(a) && i < val.length ? val.charAt(i++) : i >= val.length ? "" : a
-        });
-    }
 });
