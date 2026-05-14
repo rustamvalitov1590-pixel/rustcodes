@@ -8,6 +8,29 @@ export default async function handler(req, res) {
     typeLabel, goalLabel, platformLabel, scaleLabel, sectionsLabel, featuresLabel, contentLabel, urgencyLabel,
     formattedPrice 
   } = req.body;
+
+  // Функция для экранирования спецсимволов HTML для Telegram
+  const escapeHTML = (str) => {
+    if (!str) return "";
+    return str.toString()
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+  };
+  
+  const safeName = escapeHTML(name);
+  const safePhone = escapeHTML(phone);
+  const safeEmail = escapeHTML(email);
+  const safeMessage = escapeHTML(message);
+  const safeType = escapeHTML(typeLabel);
+  const safeGoal = escapeHTML(goalLabel);
+  const safePlatform = escapeHTML(platformLabel);
+  const safeScale = escapeHTML(scaleLabel);
+  const safeSections = escapeHTML(sectionsLabel);
+  const safeFeatures = escapeHTML(featuresLabel);
+  const safeContent = escapeHTML(contentLabel);
+  const safeUrgency = escapeHTML(urgencyLabel);
+  const safePrice = escapeHTML(formattedPrice);
   
   // Security: Honeypot check for bots
   if (_gotcha && _gotcha !== "") {
@@ -21,23 +44,23 @@ export default async function handler(req, res) {
   
   let text = `🚀 <b>НОВАЯ ЗАЯВКА С САЙТА</b>\n\n`;
 
-  if (name && name !== 'Не указано') text += `👤 <b>Имя:</b> ${name}\n`;
-  if (phone) text += `📞 <b>Телефон:</b> ${phone}\n`;
-  if (email) text += `📧 <b>Email:</b> ${email}\n`;
-  if (message && !typeLabel) text += `📝 <b>Сообщение:</b> ${message}\n`;
+  if (safeName && safeName !== 'Не указано') text += `👤 <b>Имя:</b> ${safeName}\n`;
+  if (safePhone) text += `📞 <b>Телефон:</b> ${safePhone}\n`;
+  if (safeEmail) text += `📧 <b>Email:</b> ${safeEmail}\n`;
+  if (safeMessage && !safeType) text += `📝 <b>Сообщение:</b> ${safeMessage}\n`;
   
   // Данные из Elite Квиза
-  if (typeLabel) {
+  if (safeType) {
     text += `\n--- 🚀 ELITE QUIZ BRIEF ---\n`;
-    text += `🛠 <b>Услуга:</b> ${typeLabel}\n`;
-    if (goalLabel) text += `🎯 <b>Цель:</b> ${goalLabel}\n`;
-    if (platformLabel) text += `💻 <b>Платформа:</b> ${platformLabel}\n`;
-    if (scaleLabel) text += `📏 <b>Объем:</b> ${scaleLabel}\n`;
-    if (sectionsLabel && sectionsLabel !== 'Нет') text += `📑 <b>Разделы:</b> ${sectionsLabel}\n`;
-    if (featuresLabel && featuresLabel !== 'Нет') text += `➕ <b>Фичи:</b> ${featuresLabel}\n`;
-    if (contentLabel) text += `🎨 <b>Контент:</b> ${contentLabel}\n`;
-    if (urgencyLabel) text += `⏱ <b>Срок:</b> ${urgencyLabel}\n`;
-    text += `\n💰 <b>Оценка:</b> ${formattedPrice} ₸\n`;
+    text += `🛠 <b>Услуга:</b> ${safeType}\n`;
+    if (safeGoal) text += `🎯 <b>Цель:</b> ${safeGoal}\n`;
+    if (safePlatform) text += `💻 <b>Платформа:</b> ${safePlatform}\n`;
+    if (safeScale) text += `📏 <b>Объем:</b> ${safeScale}\n`;
+    if (safeSections && safeSections !== 'Нет') text += `📑 <b>Разделы:</b> ${safeSections}\n`;
+    if (safeFeatures && safeFeatures !== 'Нет') text += `➕ <b>Фичи:</b> ${safeFeatures}\n`;
+    if (safeContent) text += `🎨 <b>Контент:</b> ${safeContent}\n`;
+    if (safeUrgency) text += `⏱ <b>Срок:</b> ${safeUrgency}\n`;
+    text += `\n💰 <b>Оценка:</b> ${safePrice} ₸\n`;
   }
 
 
