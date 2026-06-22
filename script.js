@@ -7,8 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevBtn = document.getElementById('prev-btn');
     const progressFill = document.querySelector('.progress-fill');
 
-    let currentStep = 1;
-    const totalSteps = 9;
+    let currentStepIndex = 0;
+    const defaultSequence = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const automationSequence = [1, 10, 11, 8, 9];
+    let currentSequence = defaultSequence;
+
     let selections = {
         type: null,
         goal: [],
@@ -17,6 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
         sections: [],
         features: [],
         content: null,
+        auto_type: [],
+        auto_scale: 'basic',
         urgency: 'standard',
         name: '',
         phone: '',
@@ -31,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'single',
             options: [
                 { id: 'fix',       label: 'Доработка',           desc: 'Правка дизайна, аналитика и т.д.',    price: 'от 25 000 ₸', icon: 'wrench' },
+                { id: 'automation',label: 'Код и автоматизация', desc: 'Скрипты, боты, внедрение на сайт',    price: 'от 30 000 ₸', icon: 'code' },
                 { id: 'redesign',  label: 'Редизайн сайта',      desc: 'Обновление текущего дизайна',        price: 'от 100 000 ₸', icon: 'refresh-cw' },
                 { id: 'figma',     label: 'Дизайн в Figma',      desc: 'Создание прототипа сайта',            price: 'от 10 000 ₸', icon: 'figma' },
                 { id: 'landing',   label: 'Одностраничный сайт', desc: 'Лендинг для целевого действия',       price: 'от 75 000 ₸', icon: 'layout' },
@@ -130,26 +136,57 @@ document.addEventListener('DOMContentLoaded', () => {
             title: 'Куда отправить расчет?',
             subtitle: 'Оставьте ваши контакты, чтобы мы закрепили за вами стоимость.',
             type: 'form'
+        },
+        10: {
+            id: 'auto_type',
+            title: 'Что именно нужно сделать?',
+            subtitle: 'Выберите направление работы.',
+            type: 'multi',
+            options: [
+                { id: 'tilda_gs', label: 'Tilda ➡️ Google Sheets', desc: 'Интеграция форм/отзывов', price: 'от 30 000 ₸', icon: 'database' },
+                { id: 'tg_bot', label: 'Telegram Бот', desc: 'Автоматизация в ТГ', price: 'от 50 000 ₸', icon: 'message-circle' },
+                { id: 'custom_js', label: 'Кастомный скрипт', desc: 'Калькуляторы, квизы', price: 'от 40 000 ₸', icon: 'code' },
+                { id: 'api_int', label: 'API Интеграция', desc: 'Связка с CRM или другими', price: 'от 50 000 ₸', icon: 'link' }
+            ]
+        },
+        11: {
+            id: 'auto_scale',
+            title: 'Сложность задачи',
+            subtitle: 'Оцените примерный объем логики.',
+            type: 'single',
+            options: [
+                { id: 'basic', label: 'Базовая', desc: 'Стандартная передача данных', price: 'x1.0', icon: 'zap' },
+                { id: 'complex', label: 'Сложная', desc: 'Много условий или нестандартное API', price: 'x1.5', icon: 'cpu' }
+            ]
         }
     };
 
-    const basePrices = { fix: 25000, redesign: 100000, figma: 10000, landing: 75000, corporate: 150000, ecommerce: 150000 };
+    const basePrices = { fix: 25000, automation: 30000, redesign: 100000, figma: 10000, landing: 75000, corporate: 150000, ecommerce: 150000 };
     const featurePrices = { ads: 75000, copy: 0, crm: 5000, ai: 50000, anim: 30000 };
     const scaleMultipliers = { small: 1.0, medium: 1.3, large: 1.8 };
     const urgencyMultipliers = { standard: 1.0, urgent: 1.3 };
+    const autoTypePrices = { tilda_gs: 30000, tg_bot: 50000, custom_js: 40000, api_int: 50000 };
+    const autoScaleMultipliers = { basic: 1.0, complex: 1.5 };
 
     function calculateTotalPrice(sel) {
-        let total = basePrices[sel.type] || 0;
-        (sel.features || []).forEach(f => { total += featurePrices[f] || 0; });
-        if (sel.platform === 'custom') total *= 1.2;
-        if (sel.content === 'nothing') total *= 1.15;
-        total *= scaleMultipliers[sel.scale] || 1;
+        let total = 0;
+        if (sel.type === 'automation') {
+            (sel.auto_type || []).forEach(f => { total += autoTypePrices[f] || 0; });
+            if (total === 0) total = basePrices.automation;
+            total *= autoScaleMultipliers[sel.auto_scale] || 1;
+        } else {
+            total = basePrices[sel.type] || 0;
+            (sel.features || []).forEach(f => { total += featurePrices[f] || 0; });
+            if (sel.platform === 'custom') total *= 1.2;
+            if (sel.content === 'nothing') total *= 1.15;
+            total *= scaleMultipliers[sel.scale] || 1;
+        }
         total *= urgencyMultipliers[sel.urgency] || 1;
         return Math.round(total);
     }
 
     function renderStep() {
-        const step = steps[currentStep];
+        const step = steps[currentSequence[currentStepIndex]];
         const stepId = step.id;
 
         if (step.type === 'form') {
@@ -255,15 +292,19 @@ document.addEventListener('DOMContentLoaded', () => {
             else selections[stepId].push(value);
         } else {
             selections[stepId] = value;
+            if (stepId === 'type') {
+                currentSequence = value === 'automation' ? automationSequence : defaultSequence;
+                // If they change branch, maybe reset currentStepIndex? No, handleSelect happens on step 1, so index is 0 anyway.
+            }
         }
         renderStep();
     }
 
     function updateButtons() {
-        prevBtn.disabled = currentStep === 1;
-        nextBtn.textContent = currentStep === totalSteps ? 'Получить расчет' : 'Далее';
+        prevBtn.disabled = currentStepIndex === 0;
+        nextBtn.textContent = currentStepIndex === currentSequence.length - 1 ? 'Получить расчет' : 'Далее';
         
-        const step = steps[currentStep];
+        const step = steps[currentSequence[currentStepIndex]];
         let isValid = false;
         
         if (step.type === 'form') {
@@ -283,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateProgress() {
-        progressFill.style.width = `${(currentStep / totalSteps) * 100}%`;
+        progressFill.style.width = `${((currentStepIndex + 1) / currentSequence.length) * 100}%`;
     }
 
     async function submitQuiz() {
@@ -297,15 +338,53 @@ document.addEventListener('DOMContentLoaded', () => {
         const getMultiLabels = (stepIdx, ids) => (ids || []).map(id => steps[stepIdx].options.find(o => o.id === id)?.label).filter(Boolean).join(', ') || 'Нет';
 
         const typeLabel = getLabel(1, selections.type);
-        const goalLabel = getMultiLabels(2, selections.goal);
-        const platformLabel = getLabel(3, selections.platform);
-        const scaleLabel = getLabel(4, selections.scale);
-        const sectionsLabel = getMultiLabels(5, selections.sections);
-        const featuresLabel = getMultiLabels(6, selections.features);
-        const contentLabel = getLabel(7, selections.content);
         const urgencyLabel = getLabel(8, selections.urgency);
 
-        const summaryMessage = `🚀 НОВАЯ ЗАЯВКА ИЗ КВИЗА (Elite)
+        let summaryMessage = '';
+        let waMessage = '';
+        let resultData = { formatted, typeLabel, urgencyLabel, isAuto: selections.type === 'automation' };
+
+        if (selections.type === 'automation') {
+            const autoTypeLabel = getMultiLabels(10, selections.auto_type);
+            const autoScaleLabel = getLabel(11, selections.auto_scale);
+            
+            resultData.autoTypeLabel = autoTypeLabel;
+            resultData.autoScaleLabel = autoScaleLabel;
+
+            summaryMessage = `🚀 НОВАЯ ЗАЯВКА ИЗ КВИЗА (Elite)
+Имя: ${selections.name || 'Не указано'}
+Телефон: ${selections.phone || 'Не указан'}
+Email: ${selections.email || 'Не указан'}
+---
+Услуга: ${typeLabel}
+Задачи: ${autoTypeLabel}
+Сложность: ${autoScaleLabel}
+Срок: ${urgencyLabel}
+---
+Итоговая оценка: ${formatted} ₸`.trim();
+
+            waMessage = encodeURIComponent(`Здравствуйте! Я прошел Elite Квиз на вашем сайте. Результаты:
+- Услуга: ${typeLabel}
+- Задачи: ${autoTypeLabel}
+- Сложность: ${autoScaleLabel}
+- Срок: ${urgencyLabel}
+- Оценка: ${formatted} ₸
+
+Контакт: ${selections.name || 'Без имени'}, ${selections.phone || selections.email}
+Хочу обсудить детали проекта.`);
+        } else {
+            const goalLabel = getMultiLabels(2, selections.goal);
+            const platformLabel = getLabel(3, selections.platform);
+            const scaleLabel = getLabel(4, selections.scale);
+            const sectionsLabel = getMultiLabels(5, selections.sections);
+            const featuresLabel = getMultiLabels(6, selections.features);
+            const contentLabel = getLabel(7, selections.content);
+            
+            resultData.platformLabel = platformLabel;
+            resultData.scaleLabel = scaleLabel;
+            resultData.featLabels = featuresLabel;
+
+            summaryMessage = `🚀 НОВАЯ ЗАЯВКА ИЗ КВИЗА (Elite)
 Имя: ${selections.name || 'Не указано'}
 Телефон: ${selections.phone || 'Не указан'}
 Email: ${selections.email || 'Не указан'}
@@ -321,11 +400,24 @@ Email: ${selections.email || 'Не указан'}
 ---
 Итоговая оценка: ${formatted} ₸`.trim();
 
+            waMessage = encodeURIComponent(`Здравствуйте! Я прошел Elite Квиз на вашем сайте. Результаты:
+- Услуга: ${typeLabel}
+- Платформа: ${platformLabel}
+- Объем: ${scaleLabel}
+- Фичи: ${featuresLabel}
+- Срок: ${urgencyLabel}
+- Оценка: ${formatted} ₸
+
+Контакт: ${selections.name || 'Без имени'}, ${selections.phone || selections.email}
+Хочу обсудить детали проекта.`);
+        }
+
+        resultData.waMessage = waMessage;
+
         const payload = {
             name: selections.name,
             phone: selections.phone,
             email: selections.email,
-            typeLabel, goalLabel, platformLabel, scaleLabel, sectionsLabel, featuresLabel, contentLabel, urgencyLabel,
             formattedPrice: formatted,
             message: summaryMessage,
             _gotcha: "",
@@ -352,38 +444,49 @@ Email: ${selections.email || 'Не указан'}
             }
         }
 
-        renderFinalResult(formatted, typeLabel, platformLabel, scaleLabel, featuresLabel, urgencyLabel);
+        renderFinalResult(resultData);
     }
 
 
 
-    function renderFinalResult(formatted, typeLabel, platformLabel, scaleLabel, featLabels, urgencyLabel) {
+    function renderFinalResult(data) {
         quizContainer.innerHTML = `
             <div class="result-card">
                 <div class="price-badge">
                     <span class="price-label">Ориентировочная стоимость</span>
-                    <h2 class="price-value">${formatted} ₸</h2>
+                    <h2 class="price-value">${data.formatted} ₸</h2>
                 </div>
                 <div class="result-summary">
                     <div class="summary-item">
                         <span class="summary-label">Услуга:</span>
-                        <span class="summary-value">${typeLabel}</span>
+                        <span class="summary-value">${data.typeLabel}</span>
+                    </div>
+                    ${data.isAuto ? `
+                    <div class="summary-item">
+                        <span class="summary-label">Задачи:</span>
+                        <span class="summary-value">${data.autoTypeLabel}</span>
                     </div>
                     <div class="summary-item">
+                        <span class="summary-label">Сложность:</span>
+                        <span class="summary-value">${data.autoScaleLabel}</span>
+                    </div>
+                    ` : `
+                    <div class="summary-item">
                         <span class="summary-label">Платформа:</span>
-                        <span class="summary-value">${platformLabel}</span>
+                        <span class="summary-value">${data.platformLabel}</span>
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Объем:</span>
-                        <span class="summary-value">${scaleLabel}</span>
+                        <span class="summary-value">${data.scaleLabel}</span>
                     </div>
                     <div class="summary-item">
                         <span class="summary-label">Опции:</span>
-                        <span class="summary-value">${featLabels}</span>
+                        <span class="summary-value">${data.featLabels}</span>
                     </div>
+                    `}
                     <div class="summary-item">
                         <span class="summary-label">Срок:</span>
-                        <span class="summary-value">${urgencyLabel}</span>
+                        <span class="summary-value">${data.urgencyLabel}</span>
                     </div>
                 </div>
                 <a class="btn btn-cta" href="#" target="_blank">
@@ -391,19 +494,8 @@ Email: ${selections.email || 'Не указан'}
                 </a>
             </div>`;
 
-        const waMessage = encodeURIComponent(`Здравствуйте! Я прошел Elite Квиз на вашем сайте. Результаты:
-- Услуга: ${typeLabel}
-- Платформа: ${platformLabel}
-- Объем: ${scaleLabel}
-- Фичи: ${featLabels}
-- Срок: ${urgencyLabel}
-- Оценка: ${formatted} ₸
-
-Контакт: ${selections.name || 'Без имени'}, ${selections.phone || selections.email}
-Хочу обсудить детали проекта.`);
-
         const waBtn = quizContainer.querySelector('.btn-cta');
-        if (waBtn) waBtn.href = `https://wa.me/77770752008?text=${waMessage}`;
+        if (waBtn) waBtn.href = `https://wa.me/77770752008?text=${data.waMessage}`;
 
         nextBtn.style.display = 'none';
         prevBtn.textContent = 'Начать заново';
@@ -413,8 +505,8 @@ Email: ${selections.email || 'Не указан'}
     }
 
     nextBtn.addEventListener('click', () => {
-        if (currentStep < totalSteps) { 
-            currentStep++; 
+        if (currentStepIndex < currentSequence.length - 1) { 
+            currentStepIndex++; 
             renderStep(); 
             const quizSection = document.getElementById('quiz');
             if (quizSection) quizSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -423,8 +515,8 @@ Email: ${selections.email || 'Не указан'}
     });
 
     prevBtn.addEventListener('click', () => {
-        if (currentStep > 1) { 
-            currentStep--; 
+        if (currentStepIndex > 0) { 
+            currentStepIndex--; 
             renderStep(); 
             const quizSection = document.getElementById('quiz');
             if (quizSection) quizSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -560,4 +652,34 @@ Email: ${selections.email || 'Не указан'}
             card.style.setProperty('--mouse-y', `${y}px`);
         });
     });
+    // Tilda Demo Logic
+    const tildaDemoForm = document.getElementById('tilda-demo-form');
+    const tildaDemoList = document.getElementById('tilda-demo-list');
+    
+    if (tildaDemoForm && tildaDemoList) {
+        tildaDemoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const nameInput = document.getElementById('tilda-demo-name');
+            const textInput = document.getElementById('tilda-demo-text');
+            
+            const name = nameInput.value.trim();
+            const text = textInput.value.trim();
+            
+            if (name && text) {
+                const newItem = document.createElement('div');
+                newItem.className = 'demo-review-item';
+                newItem.style.cssText = 'padding: 1.2rem; background: var(--bg-alt); border-radius: 12px; position: relative;';
+                newItem.innerHTML = `
+                    <strong style="display: block; margin-bottom: 0.3rem; font-size: 1.1rem;">${name}</strong>
+                    <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">${text}</p>
+                    <button class="delete-btn" style="position: absolute; top: 1.2rem; right: 1rem; background: none; border: none; color: #ff4d4f; cursor: pointer; font-size: 0.85rem; font-weight: bold; padding: 0.2rem;" onclick="this.parentElement.remove()">Удалить</button>
+                `;
+                
+                tildaDemoList.prepend(newItem);
+                
+                nameInput.value = '';
+                textInput.value = '';
+            }
+        });
+    }
 });
